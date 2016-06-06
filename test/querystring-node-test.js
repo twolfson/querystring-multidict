@@ -107,18 +107,18 @@ describe('Original tests from Node.js', function () {
     });
 
     // test the nested qs-in-qs case
-    // (function() {
-    //   var f = qs.parse('a=b&q=x%3Dy%26y%3Dz').toObject();
-    //   f.q = qs.parse(f.q).toObject();
-    //   assert.deepEqual(f, { a: ['b'], q: { x: ['y'], y: ['z'] } });
-    // })();
+    (function() {
+      var f = qs.parse('a=b&q=x%3Dy%26y%3Dz').toObject();
+      f.q = f.q.map(function (val) { return qs.parse(val).toObject(); });
+      assert.deepEqual(f, { a: ['b'], q: [{ x: ['y'], y: ['z'] }] });
+    })();
 
     // nested in colon
-    // (function() {
-    //   var f = qs.parse('a:b;q:x%3Ay%3By%3Az', ';', ':').toObject();
-    //   f.q = qs.parse(f.q, ';', ':').toObject();
-    //   assert.deepEqual(f, { a: ['b'], q: { x: ['y'], y: ['z'] } });
-    // })();
+    (function() {
+      var f = qs.parse('a:b;q:x%3Ay%3By%3Az', ';', ':').toObject();
+      f.q = f.q.map(function (val) { return qs.parse(val,  ';', ':').toObject(); });
+      assert.deepEqual(f, { a: ['b'], q: [{ x: ['y'], y: ['z'] }] });
+    })();
 
     assert.doesNotThrow(function() {
       qs.parse(undefined);
