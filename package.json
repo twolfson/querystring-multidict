@@ -1,0 +1,46 @@
+{
+  "name": "querystring-multidict",
+  "description": "querystring library to support Werkzeug's multidict features",
+  "version": "1.0.0",
+  "homepage": "https://github.com/twolfson/querystring-multidict",
+  "author": {
+    "name": "Todd Wolfson",
+    "email": "todd@twolfson.com",
+    "url": "http://twolfson.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/twolfson/querystring-multidict.git"
+  },
+  "bugs": {
+    "url": "https://github.com/twolfson/querystring-multidict/issues"
+  },
+  "main": "lib/querystring-multidict",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "license": "Unlicense",
+  "scripts": {
+    "precheck": "twolfson-style precheck lib/ test/",
+    "lint": "twolfson-style lint lib/ test/",
+    "pretest": "twolfson-style install",
+    "test": "npm run precheck && mocha --reporter dot && npm run lint"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "foundry": "~4.0.3",
+    "foundry-release-git": "~2.0.2",
+    "foundry-release-npm": "~2.0.2",
+    "jscs": "~1.7.3",
+    "jshint": "~2.5.10",
+    "mocha": "~1.11.0",
+    "twolfson-style": "~1.6.0"
+  },
+  "keywords": ["querystring", "qs", "multidict"],
+  "foundry": {
+    "releaseCommands": [
+      "foundry-release-git",
+      "foundry-release-npm"
+    ]
+  }
+}
