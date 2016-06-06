@@ -2,12 +2,25 @@
 
 Querystring library to support Werkzeug's multidict features
 
+We built `querystring-multidict` for consistent typing when reading query strings (e.g. `.get()` always returns a single string value whereas `querystring`/`qs` can return an array/object depending on user input). Additionally, we added `.fetch()` to make throwing form validation errors easier.
+
 ## Getting Started
 Install the module with: `npm install querystring-multidict`
 
 ```js
-var querystringMultidict = require('querystring-multidict');
-querystringMultidict(); // 'awesome'
+// Load in our dependencies and parse a query string
+var qsMultiDict = require('querystring-multidict');
+var multidict = qsMultiDict.parse('foo=bar&baz=qux&baz=quux&corge');
+// Stored as {foo: ['bar'], baz: ['qux', 'quux'], corge: ['']}
+
+// Retrieve either first value or array of values
+multidict.get('baz'); // 'qux'
+multidict.getArray('baz'); // ['qux', 'quux']
+
+// Supports same parameters as querystring.parse
+qsMultiDict.parse('w=%D6%D0%CE%C4&foo=bar', null, null,
+  {decodeURIComponent: gbkDecodeURIComponent})
+// Stored as {w: ['中文'], foo: ['bar']}
 ```
 
 ## Documentation
