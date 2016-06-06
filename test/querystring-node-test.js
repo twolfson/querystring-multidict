@@ -26,7 +26,7 @@
 var assert = require('assert');
 
 // test using assert
-var qs = require('../');
+var qsMultiDict = require('../');
 
 describe('Original tests from Node.js', function () {
   it('pass as expected', function () {
@@ -93,43 +93,43 @@ describe('Original tests from Node.js', function () {
 
     // test that the canonical qs is parsed properly.
     qsTestCases.forEach(function(testCase) {
-      assert.deepEqual(testCase[2], qs.parse(testCase[0]).toObject());
+      assert.deepEqual(testCase[2], qsMultiDict.parse(testCase[0]).toObject());
     });
 
     // test that the colon test cases can do the same
     qsColonTestCases.forEach(function(testCase) {
-      assert.deepEqual(testCase[2], qs.parse(testCase[0], ';', ':').toObject());
+      assert.deepEqual(testCase[2], qsMultiDict.parse(testCase[0], ';', ':').toObject());
     });
 
     // test the weird objects, that they get parsed properly
     qsWeirdObjects.forEach(function(testCase) {
-      assert.deepEqual(testCase[2], qs.parse(testCase[1]).toObject());
+      assert.deepEqual(testCase[2], qsMultiDict.parse(testCase[1]).toObject());
     });
 
     // test the nested qs-in-qs case
     (function() {
-      var f = qs.parse('a=b&q=x%3Dy%26y%3Dz').toObject();
-      f.q = f.q.map(function (val) { return qs.parse(val).toObject(); });
+      var f = qsMultiDict.parse('a=b&q=x%3Dy%26y%3Dz').toObject();
+      f.q = f.q.map(function (val) { return qsMultiDict.parse(val).toObject(); });
       assert.deepEqual(f, { a: ['b'], q: [{ x: ['y'], y: ['z'] }] });
     })();
 
     // nested in colon
     (function() {
-      var f = qs.parse('a:b;q:x%3Ay%3By%3Az', ';', ':').toObject();
-      f.q = f.q.map(function (val) { return qs.parse(val,  ';', ':').toObject(); });
+      var f = qsMultiDict.parse('a:b;q:x%3Ay%3By%3Az', ';', ':').toObject();
+      f.q = f.q.map(function (val) { return qsMultiDict.parse(val,  ';', ':').toObject(); });
       assert.deepEqual(f, { a: ['b'], q: [{ x: ['y'], y: ['z'] }] });
     })();
 
     assert.doesNotThrow(function() {
-      qs.parse(undefined);
+      qsMultiDict.parse(undefined);
     });
 
-    assert.deepEqual({}, qs.parse().toObject());
+    assert.deepEqual({}, qsMultiDict.parse().toObject());
 
 
     // Test limiting
     assert.equal(
-        Object.keys(qs.parse('a=1&b=1&c=1', null, null, { maxKeys: 1 }).toObject()).length,
+        Object.keys(qsMultiDict.parse('a=1&b=1&c=1', null, null, { maxKeys: 1 }).toObject()).length,
         1);
   });
 });
