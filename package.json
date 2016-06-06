@@ -1,6 +1,6 @@
 {
   "name": "querystring-multidict",
-  "description": "querystring library to support Werkzeug's multidict features",
+  "description": "Querystring library to support Werkzeug's multidict features",
   "version": "1.0.0",
   "homepage": "https://github.com/twolfson/querystring-multidict",
   "author": {

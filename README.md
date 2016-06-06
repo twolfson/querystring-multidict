@@ -1,6 +1,6 @@
 # querystring-multidict [![Build status](https://travis-ci.org/twolfson/querystring-multidict.svg?branch=master)](https://travis-ci.org/twolfson/querystring-multidict)
 
-querystring library to support Werkzeug's multidict features
+Querystring library to support Werkzeug's multidict features
 
 ## Getting Started
 Install the module with: `npm install querystring-multidict`
