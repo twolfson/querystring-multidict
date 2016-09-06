@@ -18,6 +18,18 @@ describe('A querystring-multidict instance', function () {
     var multidict = qsMultiDict.parse('a=b&a=c');
     assert.deepEqual(multidict.getArray('a'), ['b', 'c']);
   });
+
+  it('can fetch a key\'s first value', function () {
+    var multidict = qsMultiDict.parse('a=b&a=c');
+    assert.strictEqual(multidict.fetch('a'), 'b');
+  });
+
+  it('can throw when fetching from a non-existent key', function () {
+    var multidict = qsMultiDict.parse('a=b&a=c');
+    assert.throws(function fetchNonExistentKey () {
+      multidict.fetch('d');
+    });
+  });
 });
 
 // Edge cases
