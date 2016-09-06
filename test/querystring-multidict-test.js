@@ -1,6 +1,7 @@
 // Load in dependencies
 var assert = require('assert');
 var qsMultiDict = require('../');
+var MultiDictKeyError = require('../').MultiDictKeyError;
 
 // Start our tests
 describe('A querystring-multidict instance', function () {
@@ -26,9 +27,19 @@ describe('A querystring-multidict instance', function () {
 
   it('can throw when fetching from a non-existent key', function () {
     var multidict = qsMultiDict.parse('a=b&a=c');
-    assert.throws(function fetchNonExistentKey () {
+    var err;
+    try {
       multidict.fetch('d');
-    });
+    } catch (_err) {
+      err = _err;
+    }
+
+    // Verify we threw as expected
+    assert(err);
+
+    // Verify developer helper attributes (e.g. `instanceof`, `key`)
+    assert(err instanceof MultiDictKeyError);
+    assert.strictEqual(err.key, 'd');
   });
 });
 
