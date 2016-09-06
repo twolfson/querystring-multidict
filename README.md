@@ -23,10 +23,14 @@ multidict.getArray('baz'); // ['qux', 'quux']
 qsMultiDict.parse('w=%D6%D0%CE%C4&foo=bar', null, null,
   {decodeURIComponent: gbkDecodeURIComponent})
 // Stored as {w: ['中文'], foo: ['bar']}
+
+// Retrieve first value or raise an assertion error
+var multidict2 = qsMultiDict.parse('foo=bar&baz=qux&baz=quux&corge');
+multidict2.fetch('bad-key'); // Raises `MultiDictKeyError` with property `key: 'bad-key'`
 ```
 
 ## Documentation
-`querystring-multidict` exports the `parse` function as a key on `exports`.
+`querystring-multidict` exports the `parse` function and `MultiDictKeyError` constructor on `exports`.
 
 ### `MultiDict`
 We use a `MultiDict` data structure based on [Werkzeug's implementation][werkzeug-multidict].
@@ -52,6 +56,20 @@ Retrieve all values stored under `key`
 
 - val `Array` - Array of values stored under `key`
     - If no key is found, then an empty array will be returned
+
+#### `multidict.fetch(key)`
+Retrieve the first value from a key in a MultiDict or raise a `MultiDictKeyError` when key isn't present
+
+- key `String` - Reference for where to find stored value
+
+**Returns:**
+
+- val `String` - First value stored under key
+
+#### `MultiDictKeyError`
+Subclass of an `AssertionError` with additional `key` property
+
+- key `String` - Reference of where key retrieval failed
 
 ### `qsMultiDict.parse(str, sep, eq, options)`
 Parse a query string into a `MultiDict`
