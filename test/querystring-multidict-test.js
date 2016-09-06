@@ -37,7 +37,7 @@ describe('A querystring-multidict instance', function () {
     // Verify we threw as expected
     assert(err);
 
-    // Verify developer helper attributes (e.g. `instanceof`, `key`)
+    // Verify developer helper properties (e.g. `instanceof`, `key`)
     assert(err instanceof MultiDictKeyError);
     assert.strictEqual(err.key, 'd');
   });
